@@ -11,6 +11,12 @@ video_path = [data_path, 'sequences/'];
 list = dir(video_path);  
 disp(list);
 
+for k = 3:size(list, 1)
+    vid = list(k).name;
+    frames_dir = [video_path, vid, '/'];
+    frames_list = dir(frames_dir);
+    filenames = extractfield(frames_list(3:size(frames_list,1)), 'name');
+end
 
 % Run ECO
 % results = testing_ECO_gpu(seq);
