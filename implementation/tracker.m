@@ -6,11 +6,17 @@ function results = tracker(params)
 
 % Get sequence info
 [seq, im] = get_sequence_info(params.seq);
-params = rmfield(params, 'seq');
+% params = rmfield(params, 'seq');
 if isempty(im)
     seq.rect_position = [];
     [seq, results] = get_sequence_results(seq);
     return;
+end
+
+%Setup output file
+if isfield(params, 'txt_output') && params.txt_output
+    output_path = [pwd, '/output/', params.seq.video_name, '.txt'];
+    output_file = fopen(output_path, 'wt');
 end
 
 % Init position
@@ -666,8 +672,17 @@ while true
 %         end
 %          pause
     end
+    
+    % Output txt file
+    
+    if isfield(params, 'txt_output') && params.txt_output
+        fprintf(output_file, '%g,%g,%g,%g\n', pos(2), pos(1), target_sz(2), target_sz(1));
+    end
 end
 
+if isfield(params, 'txt_output') && params.txt_output
+    fclose(output_file);
+end
 % close(writer);
 
 [seq, results] = get_sequence_results(seq);

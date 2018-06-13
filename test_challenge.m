@@ -14,14 +14,18 @@ disp(list);
 
 for k = 3:size(list, 1)
     vid = list(k).name;
+    seq.video_name = vid;
     frames_dir = [video_path, vid, '/'];
     frames_list = dir(frames_dir);
     seq.len = size(frames_list,1);
     init_file = [init_path, vid, '.txt'];
-    seq.init_rect = fscanf(fopen(init_file), '%f,%f,%f,%f');
+    seq.init_rect = fscanf(fopen(init_file), '%f,%f,%f,%f')';
     filenames = extractfield(frames_list(3:seq.len), 'name')';
     seq.format = 'otb';
     seq.s_frames = strcat(frames_dir, filenames);
+    if k == 3
+        testing_ECO_gpu(seq);
+    end
 end
 
 % Run ECO

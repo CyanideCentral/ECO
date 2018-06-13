@@ -7,3 +7,4 @@ external_libs/pdollar_toolbox/*.mexa*
 external_libs/mtimesx/*.mexw*
 external_libs/mtimesx/*.mexa*
 feature_extraction/networks
+output
